@@ -84,7 +84,7 @@ impl LLamaContext {
     // Creates a new LLamaContext from the specified file and configuration parameters.
     pub fn from_file_and_params(path: &str, params: Option<&ContextParams>) -> Self {
         let params = ContextParams::or_default(params);
-        let ctx = unsafe { llama_init_from_file(path.as_ptr() as *const i8, params) };
+        let ctx = unsafe { llama_init_from_file(path.as_ptr() as *const u8, params) };
         Self { ctx }
     }
 
