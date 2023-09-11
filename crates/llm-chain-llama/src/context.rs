@@ -127,7 +127,7 @@ impl LLamaContext {
     ) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
         let path = CString::new(path).expect("could not convert to CString");
         let params = ContextParams::or_default(params);
-        let ctx = unsafe { llama_init_from_file(path.into_raw() as *const i8, params) };
+        let ctx = unsafe { llama_init_from_file(path.into_raw() as *const u8, params) };
         if ctx.is_null() {
             return Err("Initializing llama context returned nullptr".into());
         }
