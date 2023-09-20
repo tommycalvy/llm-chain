@@ -105,7 +105,7 @@ impl LLamaContext {
     pub fn from_file_and_params(path: &str, params: Option<&ContextParams>) -> Self {
         let path = CString::new(path).expect("could not convert to CString");
         let params = ContextParams::or_default(params);
-        let ctx = unsafe { llama_init_from_file(path.into_raw() as *const i8, params) };
+        let ctx = unsafe { llama_init_from_file(path.into_raw() as *const u8, params) };
         Self { ctx }
     }
 

@@ -95,7 +95,7 @@ fn main() {
     let code = std::process::Command::new("cmake")
         .arg("--build")
         .arg(".")
-        .arg("--config Release")
+    //    .arg("--config Release")
         .status()
         .expect("Failed to build lib");
     if code.code() != Some(0) {
