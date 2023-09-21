@@ -61,7 +61,7 @@ impl Executor {
         tokio::task::spawn_blocking(move || {
             async move {
                 let context_size = context_size;
-                let context = context.lock().await;
+                let context = context.blocking_lock();
                 let tokenized_stop_prompt = tokenize(
                     &context,
                     input
