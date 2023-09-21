@@ -30,7 +30,7 @@ macro_rules! bail {
 
 macro_rules! must_send {
     ($sender:expr, $val:expr) => {
-        if $sender.send($val).is_err() {
+        if $sender.send($val).await.is_err() {
             panic!("unable to send message");
         }
     };
@@ -61,7 +61,7 @@ impl Executor {
         tokio::task::spawn_blocking(move || {
             async move {
                 let context_size = context_size;
-                let context = context.blocking_lock();
+                let context = context.lock().await;
                 let tokenized_stop_prompt = tokenize(
                     &context,
                     input
@@ -174,7 +174,7 @@ impl Executor {
                         let (str_output, leftover) = decode_up_to_valid_utf8(&bytes_output);
                         leftover_bytes = leftover;
                         // XXX: make into chat if chat
-                        if sender.send(StreamSegment::Content(str_output)).is_err() {
+                        if sender.send(StreamSegment::Content(str_output)).await.is_err() {
                             panic!("Failed to send");
                         }
                     }
