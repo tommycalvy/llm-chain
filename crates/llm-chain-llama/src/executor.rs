@@ -179,14 +179,11 @@ impl Executor {
                         }
                     }
                 }
-                if sender
-                    .send(StreamSegment::Content(
+                if sender.send(StreamSegment::Content(
                         std::char::REPLACEMENT_CHARACTER
                             .to_string()
                             .repeat(leftover_bytes.len()),
-                    ))
-                    .is_err()
-                {
+                )).await.is_err() {
                     panic!("Failed to send");
                 }
             }
